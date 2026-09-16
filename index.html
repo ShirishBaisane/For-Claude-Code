@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolarGrid Container Office — 3D Prototype</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231b3a63'/%3E%3Crect x='6' y='12' width='20' height='12' fill='%238a9296'/%3E%3Crect x='14' y='16' width='4' height='8' fill='%232ec4d6'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene-canvas"></canvas>
+
+    <div id="hud">
+      <div id="hud-title">
+        <span class="hud-title-main">Container Office — 3D Prototype</span>
+        <span class="hud-title-sub">16 ft × 8 ft · two-zone layout</span>
+      </div>
+
+      <div id="camera-controls" class="panel">
+        <div class="panel-label">Camera Views</div>
+        <div class="button-row">
+          <button data-view="top">Top View</button>
+          <button data-view="entrance">Main Entrance</button>
+          <button data-view="multipurpose">Multipurpose Area</button>
+          <button data-view="private">Private IoT Lab</button>
+          <button data-view="walkthrough" id="walkthrough-btn">Walkthrough</button>
+        </div>
+      </div>
+
+      <div id="scene-options" class="panel">
+        <div class="panel-label">Scene Options</div>
+        <label class="option-row">
+          <input type="checkbox" id="toggle-roof" checked />
+          Show Roof
+        </label>
+        <label class="option-row">
+          <input type="checkbox" id="toggle-labels" />
+          Show Zone Labels
+        </label>
+        <div class="option-row">
+          <span>Flexible Area:</span>
+          <select id="flex-mode">
+            <option value="none">Open / Empty</option>
+            <option value="lounge">Lounge Concept</option>
+            <option value="storage">Storage Concept</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="info-box" class="panel">
+        <div id="info-text">Drag to orbit · scroll to zoom · right-drag to pan</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
