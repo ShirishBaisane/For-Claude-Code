@@ -23,7 +23,60 @@
     trackOutboundClicks();
     setYear();
     prefillServiceFromQuery();
+    initScrollReveal();
+    initHeaderScroll();
+    initCardSpotlight();
   });
+
+  /* Fade/slide elements in as they scroll into view. Elements only get the
+     hidden "reveal" state once JS actually runs, so a failed script never
+     leaves content invisible. */
+  function initScrollReveal() {
+    if (!("IntersectionObserver" in window)) return;
+    var items = document.querySelectorAll(".card, .feature, .step, .proj-card, .gallery-item, .stat");
+    items.forEach(function (el, i) {
+      el.classList.add("reveal");
+      el.style.transitionDelay = (Math.min(i % 6, 6) * 70) + "ms";
+    });
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    items.forEach(function (el) { observer.observe(el); });
+  }
+
+  /* Shrinks + adds a shadow to the sticky header once the page scrolls */
+  function initHeaderScroll() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var ticking = false;
+    function update() {
+      header.classList.toggle("scrolled", window.scrollY > 12);
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  }
+
+  /* Cursor-follow highlight glow on cards / project tiles */
+  function initCardSpotlight() {
+    document.addEventListener("mousemove", function (e) {
+      var el = e.target.closest ? e.target.closest(".card, .proj-card") : null;
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      el.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }, { passive: true });
+  }
 
   function setYear() {
     var year = String(new Date().getFullYear());
